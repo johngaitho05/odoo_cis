@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_partner_structured_form" model="ir.ui.view">
+            <field name="name">view_partner_structured_form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="mrc" placeholder="e.g MRCXXXXXXXX" attrs="{'readonly': [('parent_id','!=',False)]}"/>
+                    <field name="sdc_id" placeholder="e.g SDCXXXXXXXXX"  attrs="{'readonly': [('parent_id','!=',False)]}"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_res_company_extended_form" model="ir.ui.view">
+            <field name="name">view_res_company_extended_form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="replace">
+                    <field name="vat" placeholder="e.g 123456789"/>
+                    <field name="mrc" placeholder="e.g MRCXXXXXXXX"/>
+                    <field name="sdc_id" placeholder="e.g SDCXXXXXXXXX"/>
+                    <field name="sdc_access_key" password="True"/>
+                    <field name="default_customer" placeholder="Will be used as the default customer in POS"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- Extends product form -->
+        <record id="product_supplierinfo_form_view_inherit" model="ir.ui.view">
+            <field name="name">product_supplierinfo_categid</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_code']" position="after">
+                    <field name="categ_code"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
