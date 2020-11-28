@@ -1,14 +1,14 @@
 import json
-import os
 import string
-from datetime import datetime
-from xml.dom import minidom
 import pytz
 import requests
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 tz = pytz.timezone('Africa/Kigali')
 
-endpoint = "http://localhost:8000/cis/api/"
+endpoint = "http://143.110.160.225/"
 
 
 def cleaned_value(s):
@@ -20,8 +20,8 @@ def get_token(company):
     headers = {"Content-Type": 'application/json'}
     data = json.dumps({"username": company.mrc, "password": company.sdc_access_key})
     if data:
-        url = "http://127.0.0.1:8000/accounts/api/token/"
-        response = requests.post(url, data=data, headers=headers)
+        url = f"{endpoint}/accounts/api/token/"
+        response = requests.post(url, data=data, headers=headers,verify=False)
         if response.status_code == 200:
             return response.json()
     return
